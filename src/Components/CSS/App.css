@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Impact, 'Arial Narrow Bold', sans-serif;
+}
+h1 {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 1%;
+
+    color: darkgoldenrod;
+    font-family: SansSerif, serif;
+    font-size: 600%;
+}
+
+main {
+    background: black;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+*.bgVideo {
+    max-height: 30%;
+    width: 100%;
+    object-fit: cover;
+    filter: brightness(30%);
+}
+footer {
+    width: 100%;
+    text-align: center;
+    font-size: 120%;
+    background: #614b19;
+    color: black;
+}
+@media screen and (max-width:680px)  {
+    h1 {
+        font-size: 300%;
+    }
+}
