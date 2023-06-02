@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+
+}
+h1 {
+    text-align: center;
+    width: 100%;
+    height: 70%;
+    position: absolute;
+    top: 35%;
+    color: darkgoldenrod;
+    font-family: SansSerif, serif;
+    font-size: 1000%;
+}
+h2 {
+    background: #1f1d20;
+    text-align: center;
+    padding: 5%;
+    font-size: 500%;
+    font-family: Impact, 'Arial Narrow Bold', sans-serif;
+    color: darkgoldenrod;
+    border-top: gray solid 2px;
+    border-bottom: gray solid 2px;
+}
+header {
+    padding-bottom: 5%;
+}
+header p {
+    padding-bottom: 3%;
+    width: 100%;
+
+}
+header p fieldset {
+    background: #464347;
+    opacity: .5;
+    padding: 0.5% 3% 0.5% 3%;
+    font-family: Calibri, monospace;
+    color: white;
+}
+h3 {
+    text-align: right;
+    padding: 5% 5% 2% 5%;
+    font-size: 300%;
+    font-family: Impact, 'Arial Narrow Bold', sans-serif;
+    color: darkgoldenrod;
+    border-bottom: darkgoldenrod solid 1px;
+}
+
+body {
+    background: black;
+    width: 100%;
+    height: 100%;
+}
+.bgVideo {
+    max-height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: brightness(50%);
+}
+main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(51,41,28,1) 50%, rgba(0,0,0,1) 100%);
+}
+footer {
+    width: 100%;
+    text-align: center;
+    font-size: 120%;
+    background: #614b19;
+    color: black;
+}
+@media screen and (max-width:680px)  {
+    h1 {
+        font-size: 600%;
+    }
+}
