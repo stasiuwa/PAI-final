@@ -1,0 +1,14 @@
+1. walidacja danych w formularzach
+2. responsywność
+3. wiecej tresci w sekcji "oferta"
+4. doszlifować estetyke graficzna
+
+
+const loadLocalStorage = () => {
+        let loadedComments = [];
+        let loadedJSON = JSON.parse(localStorage.getItem("opinion"));
+        for (var key in loadedJSON) {
+            loadedComments.push(loadedJSON[key]);
+        }
+        return loadedComments;
+    }

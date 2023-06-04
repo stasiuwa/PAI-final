@@ -1,12 +1,34 @@
 import React from "react";
-import "./Assets/styles/Section.css"
 
-import { FaMapMarkedAlt } from "react-icons/fa"
-import { GoMail } from "react-icons/go"
-import { BsPhone } from "react-icons/bs"
-import { BsInstagram } from "react-icons/bs"
-import { AiOutlineFacebook } from "react-icons/ai"
 
+// do sekcji opinie i wizyta ( formularze )
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+//gwiazdki do oceny
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
+
+// checkboxy
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
+//
+import {Card, CardContent, Container, FormLabel, Stack} from "@mui/material";
+
+//ikonki
+import {FaMapMarkedAlt} from "react-icons/fa";
+import {GoMail} from "react-icons/go";
+import {BsFillTrash2Fill, BsInstagram, BsPhone} from "react-icons/bs";
+import {AiOutlineCloseSquare, AiOutlineEdit, AiOutlineFacebook} from "react-icons/ai";
+
+import "./Assets/styles/Section.css";
 
 const Section = ({ section }) => {
     return (
@@ -30,61 +52,28 @@ const Section = ({ section }) => {
         </div>
     );
 }
-const SlideShow = () => { //nie działa, poprawic
-    const slides = [
-        require("./Assets/img/slide1.jpg"),
-        require("./Assets/img/slide2.jpg"),
-        require("./Assets/img/slide3.jpg"),
-    ];
-    const delay = 2500;
-    const[index, setIndex] = React.useState(0);
-    const timeoutRef = React.useRef(null);
-
-    function resetTimeout() { timeoutRef.current && clearTimeout(timeoutRef.current); }
-    React.useEffect(() => {
-        resetTimeout();
-        timeoutRef.current = setTimeout(
-            () =>
-            setIndex( (prevIndex) => prevIndex === slides.length -1 ? 0 : prevIndex + 1 ),
-            delay
-        );
-        return () => {
-            resetTimeout();
-        };
-    }, [index, slides.length]);
-    
+const SlideShow = () => {
     return (
-        <div className="section" id="section_slideshow">
-            <div className="slideShow">
-                <div className="slideshowSlider">
-                    {slides.map((index) => (
-                        <div
-                            className="slide"
-                            key={index}
-                        ></div>
-                    ))}
-                </div>
-
-            </div>
+        <div id="section_slideshow">
         </div>
     );
 }
 const Offer = () => {
-    const slideImages = [
+    const lampImages = [
         require('./Assets/img/lampamatowa.jpg'),
         require('./Assets/img/lampapopolerce.jpg'),
     ];
     return (
         <div className="section" id="section_offer">
-            <p><h3>REGENERACJA LAMP</h3></p>
-            <div className="slideContainer">
+            <p><h3>REGENERACJA&nbsp;LAMP</h3></p>
+            <div className="lampImages">
                 <img
-                    src={slideImages[0]}
+                    src={lampImages[0]}
                     alt="MatteLamp"
                 />
                 &emsp;
                 <img
-                    src={slideImages[1]}
+                    src={lampImages[1]}
                     alt="Polished"
                 />
             </div>
@@ -106,10 +95,168 @@ const Offer = () => {
     );
 }
 const Opinions = () => {
+    const [open, setOpen] = React.useState(false);
+    const defaultOpinion = {
+        user: "",
+        stars: "0",
+        text: "",
+        fixing: false,
+        detailing: false,
+        tuning: false,
+    }
+    const [opinion, setOpinion] = React.useState([defaultOpinion]);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+        clearForm()
+    };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        var oldData = JSON.parse(localStorage.getItem("opinions"));
+        if (!oldData) {
+            localStorage.setItem("opinions", JSON.stringify([opinion]))
+        } else {
+            localStorage.setItem("opinions", JSON.stringify([...oldData, opinion]))
+        }
+        clearForm();
+        handleClose();
+    }
+    const clearForm = () => {
+        setOpinion(() => defaultOpinion)
+    }
+    const handleChange = (event) => {
+        const value = event.target.type === "checkbox"
+            ? event.target.checked : event.target.value;
+        setOpinion({
+            ...opinion,
+            [event.target.name]: value
+        });
+    }
+    // konwertuje json na tablice obiektów
+    const loadLocalStorage = () => {
+        if ( localStorage.getItem("opinions") ) {
+            const test = JSON.parse(localStorage.getItem("opinions"));
+            return Object.values(test);
+        }
+        else return 0
+    }
+    // niedziała poprawic
+    const removeObj = (template) => {
+        let objects = JSON.parse(localStorage.getItem("opinions"));
+        objects.filter((user) => user!==template);
+    }
+    const showComments = () => {
+    const comments = loadLocalStorage();
+        if (!comments) {
+            return (
+                <div>
+                    <h4>NIE ZNALEZIONO OPINIi</h4>
+                </div>
+            );
+        } else {
+            return (
+                <>
+                    <Container>
+                        <Stack spacing={3}>
+                            {comments.map((comment, i) => {
+                                return <div key={i} className="comments">
+                                    <Card sx={{width: 275}}>
+                                        <CardContent>
+                                            <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                                            </Typography>
+                                            <Button><BsFillTrash2Fill
+                                                className="icon"/></Button>
+                                            <Button><AiOutlineEdit className="icon"/></Button>
+                                            <Typography variant="body2">
+                                                {comment.text}
+                                            </Typography>
+                                            <Rating value={comment.stars} disabled/>
+                                            <FormControlLabel
+                                                control={<Checkbox name="fixing" checked={comment.fixing}
+                                                                   disabled/>}
+                                                label="Serwis"/>
+                                            <FormControlLabel
+                                                control={<Checkbox name="detailing" checked={comment.detailing}
+                                                                   disabled/>}
+                                                label="Detailing"/>
+                                            <FormControlLabel
+                                                control={<Checkbox name="tuning" checked={comment.tuning}
+                                                                   disabled/>}
+                                                label="Tuning"/>
+                                        </CardContent>
+                                    </Card>
+                                </div>;
+                            })}
+                        </Stack>
+                    </Container>
+                </>
+            );
+        }
+    }
     return (
         <div className="section" id="section_opinions">
-            <p><h3>OPINIE</h3></p>
+            <h3>OPINIE</h3>
+            <div id="comment_container">
+                {showComments()}
+            </div>
+            <Button id="modal-button" variant="outlined" onClick={handleClickOpen}>
+                Oceń nas!
+            </Button>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Podziel się z nami swoją opinią"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <form id="opinion-form">
+                            <TextField id="username" label="Imie Nazwisko" variant="outlined" name="user"
+                                       value={opinion.user} onChange={handleChange}/>
+                            <Box sx={{'& > legend': {mt: 1},}}>
+                                <Typography component="legend">Oceń nas</Typography>
+                                <Rating
+                                    name="stars"
+                                    value={opinion.stars}
+                                    onChange={handleChange}
+                                />
+                            </Box>
+                            <FormGroup>
+                                <FormLabel component="legend">Z jakich usług korzystałeś?</FormLabel>
+                                <FormControlLabel control={<Checkbox
+                                    name="fixing" checked={opinion.fixing} onChange={handleChange}
+                                />} label="Serwis"/>
+                                <FormControlLabel control={<Checkbox
+                                    name="detailing" checked={opinion.detailing} onChange={handleChange}
+                                />} label="Detailing"/>
+                                <FormControlLabel control={<Checkbox
+                                    name="tuning" checked={opinion.tuning} onChange={handleChange}
+                                />} label="Tuning"/>
+                            </FormGroup>
+                            <TextField
+                                id="user_comment"
+                                label="Komentarz:"
+                                placeholder="(opcjonalnie)"
+                                multiline rows={8}
+
+                                name="text"
+                                value={opinion.text}
+                                onChange={handleChange}
+                            />
+                        </form>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleSubmit}>Prześlij</Button>
+                    <Button onClick={handleClose} autoFocus><AiOutlineCloseSquare className="icon"/></Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 }

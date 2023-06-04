@@ -27,18 +27,18 @@ const App = () => {
                       Od odświeżenia wizualnego po tuning i nowe osiągi - potwierdzone wykresem z siłowni i opiniami klientów.
                   </fieldset>
               </p>
-              <h1 id="start">AUTOSZROT</h1>
-              <h2>SERWIS&emsp;DETAILING&emsp;HAMOWNIA</h2>
+              <h1>AUTOSZROT</h1>
           </header>
           <main>
           <Section section={'slideshow'}/>
+          <h2 id="offer">SERWIS&nbsp;&nbsp;DETAILING&nbsp;&nbsp;HAMOWNIA</h2>
           <Section section={'offer'}/>
           <Section section={'appointment'}/>
           <Section section={'opinions'}/>
           <Section section={'contact'}/>
           </main>
           <NavigationBar/>
-          <footer>&copy;PW</footer>
+          <footer>&copy;Paweł Wiński 2023</footer>
       </body>
   );
 }

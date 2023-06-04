@@ -14,7 +14,7 @@ const Nav = () => {
                 <ul className="sidebarMenuInner">
                     <li>
                         <Link activeClass="active"
-                              to="start"
+                              to="video"
                               spy={true}
                               smooth={true}
                               duration={500}>
@@ -23,7 +23,7 @@ const Nav = () => {
                     </li>
                     <li>
                         <Link activeClass="active"
-                              to="section_offer"
+                              to="offer"
                               spy={true}
                               smooth={true}
                               duration={500}>
