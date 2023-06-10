@@ -2,8 +2,14 @@
 2. responsywność
 3. wiecej tresci w sekcji "oferta"
 4. doszlifować estetyke graficzna
+5. fetch api jakies dane z "serwera"
+6. modyfikacja i usuwanie poszczegolnych wpisów w opiniach
+7. jakies animacje, slide-in itd
 
 
+
+
+fragmenty kodu do podmianki w razie w -
 const loadLocalStorage = () => {
         let loadedComments = [];
         let loadedJSON = JSON.parse(localStorage.getItem("opinion"));
@@ -12,3 +18,287 @@ const loadLocalStorage = () => {
         }
         return loadedComments;
     }
+
+
+    <Container id="comment-container">
+                            <Stack
+                                spacing={3}
+                                direction="row"
+                                useFlexGap flexWrap="wrap"
+                                divider={<Divider orientation="vertical" color="white" flexItem />}
+                            >
+                                {comments.map((comment, i) => {
+                                    return <div key={i} className="comments">
+                                        <Card
+                                            sx={{
+                                                width: 300,
+                                                bgcolor: 'gray',
+                                            }}
+                                        >
+                                            <CardContent>
+                                                <Typography sx={{fontSize: 20}} color="text.secondary" gutterBottom>
+                                                    {comment.user}
+                                                    <Button><BsFillTrash2Fill onClick={removeObj(comment.id)} // na klikniecie ustawic current div na niewidzialny a zmiany w localstorage wprowadzic rownolegle
+                                                                              className="icon"/></Button>
+                                                    <Button><AiOutlineEdit className="icon"/></Button>
+                                                </Typography>
+                                                <Typography variant="body2">
+                                                    {comment.text}
+                                                </Typography><br/>
+                                                <div id="displayed-comm">
+                                                    <FormControlLabel
+                                                        control={<Checkbox
+                                                            name="fixing"
+                                                            checked={comment.fixing}
+                                                            />}
+                                                        label="Serwis"/>
+                                                    <FormControlLabel
+                                                        control={<Checkbox
+                                                            name="detailing"
+                                                            checked={comment.detailing}
+                                                            />}
+                                                        label="Detailing"/>
+                                                    <FormControlLabel
+                                                        control={<Checkbox
+                                                            name="tuning"
+                                                            checked={comment.tuning}
+                                                            />}
+                                                        label="Tuning"/>
+                                                    <Rating id="stars" value={comment.stars} disabled/>
+                                                </div>
+                                            </CardContent>
+                                        </Card>
+                                    </div>;
+                                })}
+                            </Stack>
+                        </Container><br/>
+
+                        (
+                                        <>
+                                            <Container id="comment-container">
+                                                <Stack
+                                                    spacing={3}
+                                                    direction="row"
+                                                    useFlexGap flexWrap="wrap"
+                                                >
+                                                    {comments.map((comment, i) => {
+                                                        return <div key={i} className="comments">
+                                                            <Card
+                                                                sx={{
+                                                                    width: 300,
+                                                                    bgcolor: 'gray',
+                                                                }}
+                                                            >
+                                                                <CardContent>
+                                                                    <Typography sx={{fontSize: 20}} color="text.secondary" gutterBottom>
+                                                                        {comment.user}
+                                                                        <Button><BsFillTrash2Fill onClick={removeObj(comment.id)} // na klikniecie ustawic current div na niewidzialny a zmiany w localstorage wprowadzic rownolegle
+                                                                                                  className="icon"/></Button>
+                                                                        <Button><AiOutlineEdit className="icon"/></Button>
+                                                                    </Typography>
+                                                                    <Typography variant="body2">
+                                                                        {comment.text}
+                                                                    </Typography><br/>
+                                                                    <div id="displayed-comm">
+                                                                        <FormControlLabel
+                                                                            control={<Checkbox
+                                                                                name="fixing"
+                                                                                checked={comment.fixing}
+                                                                                />}
+                                                                            label="Serwis"/>
+                                                                        <FormControlLabel
+                                                                            control={<Checkbox
+                                                                                name="detailing"
+                                                                                checked={comment.detailing}
+                                                                                />}
+                                                                            label="Detailing"/>
+                                                                        <FormControlLabel
+                                                                            control={<Checkbox
+                                                                                name="tuning"
+                                                                                checked={comment.tuning}
+                                                                                />}
+                                                                            label="Tuning"/>
+                                                                        <Rating id="stars" value={comment.stars} disabled/>
+                                                                    </div>
+                                                                </CardContent>
+                                                            </Card>
+                                                        </div>;
+                                                    })}
+                                                </Stack>
+                                            </Container><br/>
+                                        </>
+                                    );
+
+
+
+
+DZIALAJACA WESRSJA Z STEPPEREM DO KOMENTARZY
+const Opinions = () => {
+    const [open, setOpen] = React.useState(false);
+    const [index, setIndex] = React.useState(1);
+    const defaultOpinion = {
+        id: 0,
+        user: "",
+        stars: "0",
+        text: "",
+        fixing: false,
+        detailing: false,
+        tuning: false,
+    }
+    const [opinion, setOpinion] = React.useState([]);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+        clearForm()
+    };
+
+
+
+
+
+    const handleSubmit = (event) => {
+        opinion.id = index;
+        setIndex(prevState => prevState+1);
+        event.preventDefault();
+        var oldData = JSON.parse(localStorage.getItem("opinions"));
+        if (!oldData) {
+            localStorage.setItem("opinions", JSON.stringify([opinion]))
+        } else {
+            localStorage.setItem("opinions", JSON.stringify([...oldData, opinion]))
+        }
+        clearForm();
+        handleClose();
+    }
+    const clearForm = () => {
+        setOpinion(() => defaultOpinion)
+    }
+    const handleChange = (event) => {
+        const value = event.target.type === "checkbox"
+            ? event.target.checked : event.target.value;
+        setOpinion({
+            ...opinion,
+            [event.target.name]: value
+        });
+    }
+    // konwertuje json na tablice obiektów
+    const loadLocalStorage = () => {
+        if ( localStorage.getItem("opinions") ) {
+            const test = JSON.parse(localStorage.getItem("opinions"));
+            return Object.values(test);
+        }
+        else return 0
+    }
+    const removeObj = (index) => {
+        var objects = loadLocalStorage();
+        //localStorage.removeItem("opinions");
+        console.log(index);
+    }
+    const theme = useTheme();
+        const [activeStep, setActiveStep] = React.useState(0);
+
+
+        const handleNext = () => {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        };
+
+        const handleBack = () => {
+            setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        };
+    const showComments = () => {
+        const comments = loadLocalStorage();
+        if (!comments) {
+            return (
+                <div>
+                    <h4>NIE ZNALEZIONO OPINII</h4><br/>
+                </div>
+            );
+        } else {
+            const maxSteps = comments.length;
+            return (
+                <>
+                    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+                        <Paper
+                            square
+                            elevation={0}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                height: 50,
+                                pl: 2,
+                                bgcolor: 'background.default',
+                            }}
+                        >
+                            <Typography>{comments[activeStep].user}</Typography>
+                        </Paper>
+                        <Box sx={{ height: 255, maxWidth: 400, width: '100%', p: 2 }}>
+                            {comments[activeStep].text}
+                        </Box>
+                        <MobileStepper
+                            variant="text"
+                            steps={maxSteps}
+                            position="static"
+                            activeStep={activeStep}
+                            nextButton={
+                                <Button
+                                    size="small"
+                                    onClick={handleNext}
+                                    disabled={activeStep === maxSteps - 1}
+                                >
+                                    Next
+                                    {theme.direction === 'rtl' ? (
+                                        <AiOutlineArrowLeft />
+                                    ) : (
+                                        <AiOutlineArrowRight />
+                                    )}
+                                </Button>
+                            }
+                            backButton={
+                                <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                                    {theme.direction === 'rtl' ? (
+                                        <AiOutlineArrowRight />
+                                    ) : (
+                                        <AiOutlineArrowLeft />
+                                    )}
+                                    Back
+                                </Button>
+                            }
+                        />
+                    </Box><br/>
+                </>
+            );
+        }
+    }
+
+    <MobileStepper
+                                id="comments-stepper"
+                                variant="text"
+                                steps={maxSteps}
+                                position="static"
+                                activeStep={activeStep}
+                                nextButton={
+                                    <Button
+                                        size="large"
+                                        onClick={handleNext}
+                                        disabled={activeStep === maxSteps - 1}
+                                    >
+                                        NASTĘPNY
+                                        {theme.direction === 'rtl' ? (
+                                            <AiOutlineArrowLeft />
+                                        ) : (
+                                            <AiOutlineArrowRight />
+                                        )}
+                                    </Button>
+                                }
+                                backButton={
+                                    <Button size="large" onClick={handleBack} disabled={activeStep === 0}>
+                                        {theme.direction === 'rtl' ? (
+                                            <AiOutlineArrowRight />
+                                        ) : (
+                                            <AiOutlineArrowLeft />
+                                        )}
+                                        POPRZEDNI
+                                    </Button>
+                                }
+                            /><br/>

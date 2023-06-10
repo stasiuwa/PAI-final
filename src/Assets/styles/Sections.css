@@ -1,0 +1,158 @@
+.section {
+    width: 100%;
+    color: gray;
+    font-family: sans-serif;
+    font-size: 150%;
+
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+/* SEKCJA OFERTA */
+.lampImages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+.lampImages img {
+    max-width: 45%;
+    max-height: 100%;
+
+    filter: brightness(80%);
+    border-radius: 20px;
+    box-shadow: black 3px 3px 15px 3px;
+}
+#article {
+    padding: 2% 5% 2% 5%;
+}
+/* SEKCJA WIZYTA */
+#appointment-form {
+    display: flex;
+    flex-flow: column;
+    width: 50%;
+    height: 90%;
+    padding: 2%;
+    background: #918066;
+    color: wheat;
+    border-radius: 15px;
+}
+#form-textinputs {}
+#radio-buttons {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
+}
+#form-button {
+    color: white;
+    background: #291802;
+    border-radius: 10px;
+    margin: 2%;
+}
+#form-button:hover {
+    filter: brightness(80%);
+}
+.appointment-inputs {
+    width: 100%;
+    height: 300px;
+}
+.buttons-container {
+    display: flex;
+    justify-content: center;
+}
+/* SEKCJA OPINIE */
+#comment_container {
+    display: flex;
+    flex-flow: column;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1%;
+}
+
+.comment-content {
+    width: 100%;
+    background: #201e1f;
+    border-radius: 10px;
+    padding: 2%;
+    display: flex;
+    flex-flow: column;
+}
+.comments {
+    display: flex;
+    padding: 2%;
+    background: #af914c;
+    color: black;
+    border-radius: 15px;
+}
+.com1 {
+    display: flex;
+    flex-flow: column;
+    width: 90%;
+}
+.com2 {
+    padding: 1%;
+    margin-top: 5%;
+    right: 1%;
+    display: flex;
+    flex-flow: column;
+    width: 10%;
+    font-size: 20%;
+}
+#section_opinions {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+#modal-button {
+    color: lightgoldenrodyellow;
+    border-color: gray;
+    width: 15%;
+    font-size: 100%;
+    background: #3e3501;
+}
+#opinion-form {
+    padding: 5%;
+}
+
+/* SEKCJA KONTAKT */
+#contactInfo {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.contactWidget {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+
+    height: 100px;
+    padding: 2%;
+    margin: 5% 0 5% 0;
+    font-size: 80%;
+    background: darkgoldenrod;
+    border-radius: 10px;
+    color: black;
+}
+.contactWidget:hover {
+    filter: brightness(120%);
+}
+.icon {
+    font-size: 200%;
+}
+.iconSocial {
+    font-size: 150%;
+    position: relative;
+    top: 25%;
+}
+.stripe {
+    width: 80%;
+    height: 2px;
+    background: black;
+}

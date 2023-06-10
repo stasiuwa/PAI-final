@@ -1,12 +1,14 @@
 import React from "react";
 import "./Assets/styles/App.css";
 
-import NavigationBar from "./NavigationBar";
-import videoBg from "./Assets/driving_car.mp4";
+import videoBg from "./Assets/img/driving_car.mp4";
 import imgBg from "./Assets/img/car.jpg";
-import Section from "./Section";
 
-
+import NavigationBar from "./NavigationBar";
+import Offer from "./Assets/Offer";
+import ContactWidget from "./Assets/ContactWidget";
+import Opinions from "./Assets/Opinions";
+import Appointments from "./Assets/Appointments";
 const App = () => {
   return (
       <body>
@@ -30,12 +32,11 @@ const App = () => {
               <h1>AUTOSZROT</h1>
           </header>
           <main>
-          <Section section={'slideshow'}/>
-          <h2 id="offer">SERWIS&nbsp;&nbsp;DETAILING&nbsp;&nbsp;HAMOWNIA</h2>
-          <Section section={'offer'}/>
-          <Section section={'appointment'}/>
-          <Section section={'opinions'}/>
-          <Section section={'contact'}/>
+              <h2 id="offer">SERWIS&nbsp;&nbsp;DETAILING&nbsp;&nbsp;HAMOWNIA</h2>
+              <Offer/>
+              <Appointments/>
+              <Opinions/>
+              <ContactWidget/>
           </main>
           <NavigationBar/>
           <footer>&copy;Paweł Wiński 2023</footer>
