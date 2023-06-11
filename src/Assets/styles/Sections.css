@@ -10,12 +10,40 @@
     align-items: center;
     margin: 0 auto;
 }
+/* SEKCJA TUNING */
+#tuning-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#tuning-imgs {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+#image-desc{
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    background: wheat;
+    padding: 0 .5% 0 .5%;
+    border-radius: 5px;
+}
+#tuning-buttons {
+    width: 25%;
+    height: 25%;
+    border-radius: 10px;
+}
+#tuning-imgs:hover{
+    filter: brightness(40%);
+}
 /* SEKCJA OFERTA */
 .lampImages {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 500px;
+    height: 100%;
 }
 .lampImages img {
     max-width: 45%;
@@ -47,9 +75,12 @@
 }
 #form-button {
     color: white;
-    background: #291802;
+    background: #2c2420;
     border-radius: 10px;
     margin: 2%;
+}
+#form-button:disabled {
+    background: darkred;
 }
 #form-button:hover {
     filter: brightness(80%);
@@ -119,8 +150,49 @@
 #opinion-form {
     padding: 5%;
 }
+/* SEKCJA SPRZEDAŻ */
+#sell-modal{
 
-/* SEKCJA KONTAKT */
+}
+#projects-container{
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+#project-image-button {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 100%;
+    height: 40%;
+    margin: 1%;
+    padding: 1%;
+}
+.car-name {
+    text-align: center;
+    padding: 0 2% 0 2%;
+    margin-bottom: 1%;
+    color: darkgoldenrod;
+    border-radius: 5px;
+}
+.project-images {
+    border-radius: 5px;
+    filter: brightness(80%);
+    padding: 2%;
+    width: 350px;
+    height: 200px;
+    -webkit-transition: padding 200ms;
+}
+.project-images:hover {
+    filter: brightness(120%);
+    padding: 0;
+    transition-duration: 200ms;
+}
+
+ /* SEKCJA KONTAKT */
 #contactInfo {
     display: flex;
     width: 100%;
@@ -155,4 +227,85 @@
     width: 80%;
     height: 2px;
     background: black;
+}
+@media screen and (max-width:1280px)  {
+    #projects-container {
+
+    }
+    #project-image-button {
+        font-size: 80%;
+        width: 25%;
+    }
+    .project-images {
+        border-radius: 5px;
+        filter: brightness(80%);
+        padding: 2%;
+        width: 100%;
+        height: 100%;
+    }
+}
+@media screen and (max-width:910px)  {
+    .accordion-images {
+        width: 70%;
+        height: 70%;
+    }
+    .contactWidget {
+        height: 70px;
+        padding: 1%;
+        margin: 2% 0 2% 0;
+        font-size: 60%;
+    }
+    #article {
+        font-size: 80%;
+    }
+}
+@media screen and (max-width:845px)  {
+    .accordion-images {
+        width: 40%;
+        height: 40%;
+    }
+}
+@media screen and (max-width:680px)  {
+    .contactWidget {
+        height: 65px;
+        padding: 1%;
+        margin: 0.5% 0 2% 0;
+        font-size: 50%;
+    }
+    #article {
+        font-size: 70%;
+    }
+    .appointment-inputs {
+        height: 100%;
+    }
+    #radio-buttons {
+        display: flex;
+        align-items: center;
+        flex-flow: column;
+    }
+    .com1 {
+        width: 70%;
+    }
+    #modal-title{
+        font-size: 150%;
+    }
+    #modal-text{
+        font-size: 60%;
+    }
+}
+@media screen and (max-width:560px) {
+    .contactWidget {
+        height: 55px;
+        padding: 1%;
+        margin: 0.5% 0 2% 0;
+        font-size: 40%;
+    }
+
+    #article {
+        font-size: 65%;
+    }
+
+    #modal-title {
+        font-size: 120%;
+    }
 }

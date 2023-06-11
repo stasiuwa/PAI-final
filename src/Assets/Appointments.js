@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import {FormLabel, MenuItem, Radio, RadioGroup, Select} from "@mui/material";
+import { FormLabel, MenuItem, Radio, RadioGroup, Select} from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
@@ -43,14 +43,10 @@ const Appointments = () => {
     ];
     const [services, setServices] = useState([]);
     const [selectedServices, setSelectedServices] = useState([]);
+    const [valid, setValid] = useState(true);
     const resetFormPart1 = () => {
         setAppointment(defaultAppointment);
         setWorkshop("fixing");
-    }
-    const handleChange = (event) => {
-        const value = event.target.type === "radio" ?
-            setWorkshop(event.target.value) : event.target.value
-        setAppointment({...appointment, [event.target.name]: value});
     }
     const handleSelect = (event) => {
         const {
@@ -71,6 +67,7 @@ const Appointments = () => {
     const resetFormPart2 = () => {
         setSelectedServices([]);
         setDate(dayjs());
+        setPhone("");
     }
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -78,6 +75,37 @@ const Appointments = () => {
         appointment.services = selectedServices;
         appointment.date = date;
         console.log(appointment);
+        var oldData = JSON.parse(localStorage.getItem("appointments"));
+        if (!oldData) {
+            localStorage.setItem("appointments", JSON.stringify([appointment]))
+        } else {
+            localStorage.setItem("appointments", JSON.stringify([...oldData, appointment]))
+        }
+        resetFormPart1();
+        resetFormPart2();
+    }
+    const handleChange = (event) => {
+        const value = event.target.type === "radio" ?
+            setWorkshop(event.target.value) : event.target.value
+        setAppointment({...appointment, [event.target.name]: value});
+    }
+    //nie dziala
+    const validation = () => {
+        if ( appointment.name.match("^[a-zA-Z]*$") != null) {
+            if ( appointment.surname.match("^[a-zA-Z]*$") != null) {
+                if (appointment.email.match('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$') != null) {
+                    setValid(true)
+                }
+                else {
+                    setValid(false)
+                }
+            }
+        }
+        setValid(false);
+        console.log(valid);
+        console.log(appointment.name);
+        console.log(appointment.surname);
+        console.log(appointment.email);
     }
     return (
         <div className="section" id="section_appointment">
@@ -86,25 +114,24 @@ const Appointments = () => {
                 {!show && <div className={"appointment-inputs"}>
                     <FormGroup>
                         <TextField
-                            required
                             value={appointment.name}
                             name="name"
                             type="text"
                             label="Imie:"
                             style={{ margin: "0.5%"}}
                             onChange={handleChange}
+                            required
                         />
                         <TextField
-                            required
                             value={appointment.surname}
                             name="surname"
                             type="text"
                             label="Nazwisko:"
                             style={{ margin: "0.5%"}}
                             onChange={handleChange}
+                            required
                         />
                         <TextField
-                            required
                             value={appointment.email}
                             name="email"
                             type="email"
@@ -112,6 +139,8 @@ const Appointments = () => {
                             placeholder="example@mail.com"
                             style={{ margin: "0.5%"}}
                             onChange={handleChange}
+                            feedback="poprawny email"
+                            required
                         />
                     </FormGroup>
                         <FormLabel>Warsztat:</FormLabel>
@@ -129,13 +158,15 @@ const Appointments = () => {
                             style={{ background: "red" }}
                             onClick={resetFormPart1}><BiReset style={{ fontSize: "150%" }}/>
                         </Button>
-                        <Button id="form-button" onClick={nextStep}> DALEJ </Button>
+                        <Button id="form-button" onClick={nextStep} disabled={!valid}> DALEJ </Button>
+                        <Button id="form-button" onClick={validation} > WALIDACJA </Button>
                     </div>
                 </div>}
 
                 {show && <div className={"appointment-inputs"}>
                     <FormLabel>Wybierz usługę:</FormLabel>
                     <Select
+                        required
                         labelId="service-name"
                         multiple
                         value={selectedServices}
@@ -164,6 +195,7 @@ const Appointments = () => {
                             />
                         </LocalizationProvider>
                         <MuiTelInput
+
                             label="numer telefonu:"
                             style={{ margin: "2%"}}
                             value={phone}

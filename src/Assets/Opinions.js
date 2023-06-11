@@ -5,7 +5,8 @@ import {FormLabel} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {BsFillTrash2Fill} from "react-icons/bs";
-import {AiOutlineCloseSquare, AiOutlineEdit} from "react-icons/ai";
+import { FiDelete } from "react-icons/fi";
+import {AiOutlineCloseSquare} from "react-icons/ai";
 import Rating from "@mui/material/Rating";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -21,8 +22,9 @@ import DialogActions from "@mui/material/DialogActions";
 
 
 const Opinions = () => {
+
     const [open, setOpen] = React.useState(false);
-    const [index, setIndex] = React.useState(1);
+    const [index, setIndex] = React.useState(0);
     const defaultOpinion = {
         id: 0,
         user: "",
@@ -34,13 +36,12 @@ const Opinions = () => {
     }
     const [opinion, setOpinion] = React.useState([]);
     const handleClickOpen = () => {
+        clearForm()
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
-        clearForm()
     };
-
     const handleSubmit = (event) => {
         opinion.id = index;
         setIndex(prevState => prevState+1);
@@ -73,11 +74,74 @@ const Opinions = () => {
         }
         else return 0
     }
-    /*const removeObj = (index) => {
-        var objects = loadLocalStorage();
-        localStorage.removeItem("opinions");
-        console.log(index);
-    }*/
+    const addComment = () => {
+        return (
+            <div>
+                <Button id="modal-button" variant="outlined" style={{ width: "100%"}} onClick={handleClickOpen}>
+                    Oceń nas!
+                </Button>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Podziel się z nami swoją opinią :)"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description"
+                                           style={{
+                                               fontSize: "150%",
+                                               textAlign: "center"
+                                           }}
+                        >
+                            <form id="opinion-form">
+                                <TextField id="username" label="Imie Nazwisko" variant="outlined" name="user"
+                                           value={opinion.user} onChange={handleChange}/>
+                                <FormLabel component="legend" style={{marginTop:"10%"}}>Z jakich usług korzystałeś?</FormLabel>
+                                <FormGroup
+                                    style={{ marginLeft: "30%" }}
+                                >
+                                    <FormControlLabel control={<Checkbox
+                                        name="fixing" checked={opinion.fixing} onChange={handleChange}
+                                    />} label="Serwis"/>
+                                    <FormControlLabel control={<Checkbox
+                                        name="detailing" checked={opinion.detailing} onChange={handleChange}
+                                    />} label="Detailing"/>
+                                    <FormControlLabel control={<Checkbox
+                                        name="tuning" checked={opinion.tuning} onChange={handleChange}
+                                    />} label="Tuning"/>
+                                </FormGroup>
+                                <TextField
+                                    id="user_comment"
+                                    label="Komentarz:"
+                                    placeholder="(opcjonalnie)"
+                                    multiline rows={8}
+
+                                    name="text"
+                                    value={opinion.text}
+                                    onChange={handleChange}
+                                />
+                                <Box sx={{'& > legend': {mt: 1},}}>
+                                    <Typography component="legend">Oceń nas</Typography>
+                                    <Rating
+                                        name="stars"
+                                        value={opinion.stars}
+                                        onChange={handleChange}
+                                    />
+                                </Box>
+                            </form>
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleSubmit}>Prześlij</Button>
+                        <Button onClick={handleClose} autoFocus><AiOutlineCloseSquare className="icon"/></Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        )
+    }
     const showComments = () => {
         const comments = loadLocalStorage();
         if (!comments) {
@@ -99,9 +163,15 @@ const Opinions = () => {
                                             }}>
                                                 <div>{comments[activeStep].user}:</div>
                                                 <div id="icons">
-                                                    <Button><AiOutlineEdit style={{ color: "black", fontSize: "180%"}}/></Button>
-                                                    <Button><BsFillTrash2Fill //onClick={removeObj(comments[activeStep].id)} na klikniecie ustawic current div na niewidzialny a zmiany w localstorage wprowadzic rownolegle
-                                                                              style={{ color: "black", fontSize: "180%"}}/></Button>
+                                                    <Button><FiDelete
+                                                        onClick={() => {
+                                                            var objects = loadLocalStorage();
+                                                            objects.splice(activeStep, 1);
+                                                            localStorage.removeItem("opinions");
+                                                            localStorage.setItem("opinions",JSON.stringify(objects));
+                                                            setOpinion(defaultOpinion);
+                                                        }}
+                                                        style={{ color: "black", fontSize: "180%"}}/></Button>
                                                 </div>
                                             </div>
                                             <TextField
@@ -142,6 +212,10 @@ const Opinions = () => {
                                     </div><br/>
                                 </>
                         })}
+                            <Button onClick={() => {
+                                localStorage.removeItem("opinions");
+                                {setIndex(0)}
+                            }}><BsFillTrash2Fill style={{ color: "red", fontSize: "180%"}}/></Button>
                     </div><br/>
                 </>
             );
@@ -153,68 +227,7 @@ const Opinions = () => {
             <div id="comment_container">
                 {showComments()}
             </div>
-            <Button id="modal-button" variant="outlined" onClick={handleClickOpen}>
-                Oceń nas!
-            </Button>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    {"Podziel się z nami swoją opinią :)"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description"
-                        style={{
-                            fontSize: "150%",
-                            textAlign: "center"
-                        }}
-                    >
-                        <form id="opinion-form">
-                            <TextField id="username" label="Imie Nazwisko" variant="outlined" name="user"
-                                       value={opinion.user} onChange={handleChange}/>
-                            <FormLabel component="legend" style={{marginTop:"10%"}}>Z jakich usług korzystałeś?</FormLabel>
-                            <FormGroup
-                                style={{ marginLeft: "30%" }}
-                            >
-                                <FormControlLabel control={<Checkbox
-                                    name="fixing" checked={opinion.fixing} onChange={handleChange}
-                                />} label="Serwis"/>
-                                <FormControlLabel control={<Checkbox
-                                    name="detailing" checked={opinion.detailing} onChange={handleChange}
-                                />} label="Detailing"/>
-                                <FormControlLabel control={<Checkbox
-                                    name="tuning" checked={opinion.tuning} onChange={handleChange}
-                                />} label="Tuning"/>
-                            </FormGroup>
-                            <TextField
-                                id="user_comment"
-                                label="Komentarz:"
-                                placeholder="(opcjonalnie)"
-                                multiline rows={8}
-
-                                name="text"
-                                value={opinion.text}
-                                onChange={handleChange}
-                            />
-                            <Box sx={{'& > legend': {mt: 1},}}>
-                                <Typography component="legend">Oceń nas</Typography>
-                                <Rating
-                                    name="stars"
-                                    value={opinion.stars}
-                                    onChange={handleChange}
-                                />
-                            </Box>
-                        </form>
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleSubmit}>Prześlij</Button>
-                    <Button onClick={handleClose} autoFocus><AiOutlineCloseSquare className="icon"/></Button>
-                </DialogActions>
-            </Dialog>
+            {addComment()}
         </div>
     );
 }

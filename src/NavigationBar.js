@@ -23,7 +23,16 @@ const Nav = () => {
                     </li>
                     <li>
                         <Link activeClass="active"
-                              to="offer"
+                              to="sell-section"
+                              spy={true}
+                              smooth={true}
+                              duration={500}>
+                            SPRZEDAŻ
+                        </Link>
+                    </li>
+                    <li>
+                        <Link activeClass="active"
+                              to="offer-bar"
                               spy={true}
                               smooth={true}
                               duration={500}>
@@ -46,6 +55,15 @@ const Nav = () => {
                               smooth={true}
                               duration={500}>
                             OPINIE
+                        </Link>
+                    </li>
+                    <li>
+                        <Link activeClass="active"
+                              to="section-employees"
+                              spy={true}
+                              smooth={true}
+                              duration={500}>
+                            PRACOWNICY
                         </Link>
                     </li>
                     <li>

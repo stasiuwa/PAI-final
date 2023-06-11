@@ -14,7 +14,7 @@ h1 {
     font-size: 1000%;
 }
 h2 {
-    background: #1f1d20;
+    background: #0f0a09;
     text-align: center;
     padding: 5%;
     font-size: 500%;
@@ -31,13 +31,6 @@ header p {
     width: 100%;
 
 }
-header p fieldset {
-    background: #464347;
-    opacity: .5;
-    padding: 0.5% 3% 0.5% 3%;
-    font-family: Calibri, monospace;
-    color: white;
-}
 h3 {
     text-align: right;
     width: 90%;
@@ -49,12 +42,12 @@ h3 {
 }
 h4 {
     text-align: center;
-    width: 100%;
+    width: 90%;
     padding: 3% 3% 1% 3%;
     font-size: 200%;
-
-    color: darkred;
-    border-bottom: darkred solid 1px;
+    margin-top: 5%;
+    color: darkgoldenrod;
+    border-bottom: darkgoldenrod solid 1px;
 }
 body {
     background: black;
@@ -82,8 +75,45 @@ footer {
     background: #614b19;
     color: black;
 }
+
+@media screen and (max-width:1280px)  {
+    h1 {
+        top: 30%;
+        font-size: 500%;
+    }
+    h2 {
+        font-size: 400%;
+    }
+    h3 {
+        font-size: 200%;
+    }
+}
+@media screen and (max-width:910px)  {
+    h1 {
+        top: 25%;
+    }
+    h2 {
+        font-size: 300%;
+    }
+    h3 {
+        font-size: 175%;
+    }
+    h4 {
+        font-size: 140%;
+    }
+}
 @media screen and (max-width:680px)  {
     h1 {
-        font-size: 600%;
+        top:20%;
+        font-size: 400%;
+    }
+    h2 {
+        font-size: 200%;
+    }
+    h3 {
+        font-size: 150%;
+    }
+    h4 {
+        font-size: 120%;
     }
 }

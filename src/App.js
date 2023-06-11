@@ -9,39 +9,33 @@ import Offer from "./Assets/Offer";
 import ContactWidget from "./Assets/ContactWidget";
 import Opinions from "./Assets/Opinions";
 import Appointments from "./Assets/Appointments";
+import Sell from "./Assets/Sell";
+import Employees from "./Assets/Employees";
 const App = () => {
-  return (
-      <body>
-          <header>
-              <div id="video">
-                  <video className="bgVideo" autoPlay loop muted>
-                      <source src={videoBg} type="video/webm"/>
-                      <source src={imgBg} type="image/jpg"/>
-                  </video>
-              </div>
-              <p>
-                  <fieldset>
-                      <legend>AUTOSZROT:</legend>
-                      &emsp; Jesteśmy firmą specjalizującą się w branży samochodowej.
-                      Działamy na rynku od ponad 10 lat. W tym czasie zaskarbiliśmy sobie zaufanie naszych klientów.
-                      Mamy za sobą wiele ogólnoświatowych projektów, ale to nie znaczy że nie zajmujemy się zleceniami
-                      od klientów prywatnych.<br/><br/>&emsp;W naszej ofercie znajdziesz wiele sposobów aby zadbać o swoje auto.
-                      Od odświeżenia wizualnego po tuning i nowe osiągi - potwierdzone wykresem z siłowni i opiniami klientów.
-                  </fieldset>
-              </p>
-              <h1>AUTOSZROT</h1>
-          </header>
-          <main>
-              <h2 id="offer">SERWIS&nbsp;&nbsp;DETAILING&nbsp;&nbsp;HAMOWNIA</h2>
-              <Offer/>
-              <Appointments/>
-              <Opinions/>
-              <ContactWidget/>
-          </main>
-          <NavigationBar/>
-          <footer>&copy;Paweł Wiński 2023</footer>
-      </body>
-  );
+      return (
+            <body>
+            <header>
+                <div id="video">
+                    <video className="bgVideo" autoPlay loop muted>
+                        <source src={videoBg} type="video/webm"/>
+                        <source src={imgBg} type="image/jpg"/>
+                    </video>
+                </div>
+            <h1>AUTOSZROT</h1>
+            </header>
+            <main>
+                <h2 id="offer-bar">SERWIS&nbsp;&nbsp;DETAILING&nbsp;&nbsp;HAMOWNIA</h2>
+                <Sell/>
+                <Offer/>
+                <Appointments/>
+                <Opinions/>
+                <Employees/>
+                <ContactWidget/>
+            </main>
+            <NavigationBar/>
+            <footer>&copy;Paweł Wiński 2023</footer>
+            </body>
+      );
 }
 
 export default App;
