@@ -22,7 +22,6 @@ import DialogActions from "@mui/material/DialogActions";
 
 
 const Opinions = () => {
-
     const [open, setOpen] = React.useState(false);
     const [index, setIndex] = React.useState(0);
     const defaultOpinion = {
@@ -34,12 +33,12 @@ const Opinions = () => {
         detailing: false,
         tuning: false,
     }
-    const [opinion, setOpinion] = React.useState([]);
+    const [opinion, setOpinion] = React.useState(defaultOpinion);
     const handleClickOpen = () => {
-        clearForm()
         setOpen(true);
     };
     const handleClose = () => {
+        clearForm()
         setOpen(false);
     };
     const handleSubmit = (event) => {
@@ -153,6 +152,7 @@ const Opinions = () => {
         } else {
             return (
                 <>
+
                         <div className="comment-content">
                             {comments.map((comment, activeStep) => {
                                 return <>
@@ -171,7 +171,26 @@ const Opinions = () => {
                                                             localStorage.setItem("opinions",JSON.stringify(objects));
                                                             setOpinion(defaultOpinion);
                                                         }}
-                                                        style={{ color: "black", fontSize: "180%"}}/></Button>
+                                                        style={{ color: "black", fontSize: "150%"}}/></Button>
+                                                    <Button
+                                                        onClick={() => {
+                                                            var objects = loadLocalStorage();
+                                                            handleClickOpen()
+                                                            var objects2 = loadLocalStorage();
+                                                            setIndex(prev=>prev-1);
+                                                            objects2.slice(-1);
+                                                            objects[activeStep].id = objects.length-index;
+                                                            objects[activeStep].user = objects2.user;
+                                                            objects[activeStep].text = objects2.text;
+                                                            objects[activeStep].stars = objects2.stars;
+                                                            objects[activeStep].fixing = objects2.fixing;
+                                                            objects[activeStep].detailing = objects2.detailing;
+                                                            objects[activeStep].tuning = objects2.tuning;
+
+                                                            localStorage.removeItem("opinions");
+                                                            localStorage.setItem("opinions",JSON.stringify(objects));
+                                                        }}
+                                                        style={{ color: "black", fontSize: "70%"}}>edit</Button>
                                                 </div>
                                             </div>
                                             <TextField
@@ -211,10 +230,11 @@ const Opinions = () => {
                                         </div>
                                     </div><br/>
                                 </>
+
                         })}
                             <Button onClick={() => {
                                 localStorage.removeItem("opinions");
-                                {setIndex(0)}
+                                setIndex(0)
                             }}><BsFillTrash2Fill style={{ color: "red", fontSize: "180%"}}/></Button>
                     </div><br/>
                 </>
