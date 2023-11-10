@@ -1,4 +1,4 @@
-Projekt końcowy na zaliczenie przedmiotu Programowanie Aplikacji Internetowych Semestr IV Informatyka WEII POLLUB 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
